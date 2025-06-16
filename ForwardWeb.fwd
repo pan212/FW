@@ -1,8 +1,17 @@
 {
   "title": "𝓟𝓪𝓷'𝓼 𝓦𝓲𝓭𝓰𝓮𝓽𝓼⚡️",
   "description": "自用模块聚合",
-  "icon": "https://raw.githubusercontent.com/quantumultxx/FW-Widgets/refs/heads/main/icon/icon1.PNG",
+  "icon": "https://raw.githubusercontent.com/quantumultxx/FW-Widgets/refs/heads/main/icon/icon.PNG",
   "widgets": [
+	  {
+      "id": "Pornhub",
+      "title": "Pornhub",
+      "description": "在线观看Pornhub",
+      "requiredVersion": "0.0.1",
+      "version": "1.0.3",
+      "author": "海带",
+      "url": "https://raw.githubusercontent.com/Madai-v/ForwardWidgets/refs/heads/main/Widgets/ph.js"
+    },
     {
       "id": "jable",
       "title": "Jable",
@@ -20,15 +29,7 @@
       "version": "0.5.0",
       "author": "Baran",
       "url": "https://github.com/baranwang/forward-widget/releases/latest/download/91porn.js"
-    },
-	  {
-      "id": "Pornhub",
-      "title": "Pornhub",
-      "description": "在线观看Pornhub",
-      "requiredVersion": "0.0.1",
-      "version": "1.0.3",
-      "author": "海带",
-      "url": "https://raw.githubusercontent.com/Madai-v/ForwardWidgets/refs/heads/main/Widgets/ph.js"
     }
+
   ]
 }
