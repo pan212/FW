@@ -21,7 +21,16 @@
       "author": "nibiru",
       "url": "https://raw.githubusercontent.com/quantumultxx/FW-Widgets/refs/heads/main/Widgets/jable.js"
     },
-	  {
+    {
+      "id": "ti.bemarkt.javday",
+      "title": "JAVDay",
+      "description": "获取 JAVDay 推荐",
+      "requiredVersion": "0.0.1",
+      "version": "1.1.0",
+      "author": "Ti",
+      "url": "https://raw.githubusercontent.com/quantumultxx/ForwardWidgets/refs/heads/main/Widgets/JAVDay.js"
+    },
+    {
       "id": "91porn",
       "title": "91Porn",
       "description": "获取 91Porn 视频",
