@@ -8,7 +8,7 @@
       "title": "Pornhub",
       "description": "在线观看Pornhub",
       "requiredVersion": "0.0.1",
-      "version": "1.0.3",
+      "version": "1.0.5",
       "author": "海带",
       "url": "https://raw.githubusercontent.com/Madai-v/ForwardWidgets/refs/heads/main/Widgets/ph.js"
     },
@@ -17,7 +17,7 @@
       "title": "Jable",
       "description": "获取Jable全站视频",
       "requiredVersion": "0.0.1",
-      "version": "1.0.6",
+      "version": "1.0.7",
       "author": "nibiru",
       "url": "https://raw.githubusercontent.com/quantumultxx/FW-Widgets/refs/heads/main/Widgets/jable.js"
     },
