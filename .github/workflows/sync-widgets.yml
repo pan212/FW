@@ -2,7 +2,7 @@ name: Sync Widget JS Files with Backup (16 & 18+)
 
 on:
   schedule:
-    - cron: '0 * * * *'   # 每小时运行一次
+    - cron: '0 * * * *'   # 每小时执行一次
   workflow_dispatch:
 
 jobs:
@@ -15,8 +15,8 @@ jobs:
 
       - name: Prepare Directories
         run: |
-          mkdir -p "WidgetsAutoBackup/18+/history"
           mkdir -p "WidgetsAutoBackup/16/history"
+          mkdir -p "WidgetsAutoBackup/18+/history"
 
       - name: Download and Compare Files
         run: |
@@ -32,7 +32,7 @@ jobs:
             history_dir="$target_dir/history"
             temp_file="$target_dir/${filename}.new"
             target_file="$target_dir/${filename}"
-            backup_file="$history_dir/${filename}.${TIMESTAMP}.bak"
+            backup_file="${history_dir}/${filename}.${TIMESTAMP}.bak"
 
             echo "Checking [$dir]: $filename"
             curl -sSL "$url" -o "$temp_file"
@@ -110,5 +110,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add WidgetsAutoBackup/16/
           git add WidgetsAutoBackup/18+/
-          git commit -m "🔄 Auto-sync + backup widgets at $(date +'%Y-%m-%d %H:%M:%S')"
+          git commit -m "🔄 Auto-sync + backup widgets at $(date +'%Y-%m-%d %H:%M:%S')" || exit 0
+          
+          git pull --rebase
           git push
