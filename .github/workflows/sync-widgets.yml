@@ -1,8 +1,8 @@
-name: Sync Widget JS Files
+name: Sync Widget JS Files with Backup under 18+/history
 
 on:
   schedule:
-    - cron: '0 * * * *'   # 每小时运行一次
+    - cron: '0 * * * *'   # 每小时执行一次
   workflow_dispatch:
 
 jobs:
@@ -13,15 +13,17 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
-      - name: Prepare workspace
-        run: mkdir -p "FW/WidgetsAutoBackup/18+"
+      - name: Prepare Directories
+        run: |
+          mkdir -p "FW/WidgetsAutoBackup/18+/history"
 
-      - name: Download and check for changes
+      - name: Download and Compare Files
         run: |
           set -e
           TARGET_DIR="FW/WidgetsAutoBackup/18+"
+          HISTORY_DIR="$TARGET_DIR/history"
+          TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 
-          echo "Downloading raw files..."
           RAW_FILES=(
             "https://raw.githubusercontent.com/Madai-v/ForwardWidgets/refs/heads/main/Widgets/ph.js"
             "https://raw.githubusercontent.com/pack1r/ForwardWidgets/refs/heads/main/widgets/jable.js"
@@ -41,15 +43,18 @@ jobs:
             filename=$(basename "$url")
             temp_file="${TARGET_DIR}/${filename}.new"
             target_file="${TARGET_DIR}/${filename}"
+            backup_file="${HISTORY_DIR}/${filename}.${TIMESTAMP}.bak"
 
+            echo "Checking: $filename"
             curl -sSL "$url" -o "$temp_file"
 
             if [ -f "$target_file" ]; then
               if cmp -s "$temp_file" "$target_file"; then
-                echo "No change: $filename"
+                echo "No changes for $filename"
                 rm "$temp_file"
               else
-                echo "Updated: $filename"
+                echo "Changes detected for $filename"
+                cp "$target_file" "$backup_file"
                 mv "$temp_file" "$target_file"
                 CHANGED=true
               fi
@@ -70,11 +75,11 @@ jobs:
 
           echo "changed=$CHANGED" >> $GITHUB_ENV
 
-      - name: Commit and Push if changed
+      - name: Commit and Push Changes
         if: env.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add "FW/WidgetsAutoBackup/18+/"
-          git commit -m "🔄 Auto-sync widget JS files to 18+ backup folder"
+          git add FW/WidgetsAutoBackup/18+/
+          git commit -m "🔄 Auto-sync + backup widgets at $(date +'%Y-%m-%d %H:%M:%S')"
           git push
