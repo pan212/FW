@@ -1,5 +1,5 @@
 {
-  "title": "𝓟𝓪𝓷'𝓼 𝓦𝓲𝓭𝓰𝓮𝓽𝓼⚡️",
+  "title": "𝓟𝓪𝓷'𝓼 𝓦𝓲𝓭𝓰𝓮𝓽𝓼🈲",
   "description": "自用模块聚合",
   "icon": "https://raw.githubusercontent.com/quantumultxx/FW-Widgets/refs/heads/main/icon/icon.PNG",
   "widgets": [
@@ -12,14 +12,14 @@
       "author": "海带",
       "url": "https://raw.githubusercontent.com/Madai-v/ForwardWidgets/refs/heads/main/Widgets/ph.js"
     },
-    {
+        {
       "id": "jable",
       "title": "Jable",
       "description": "获取Jable全站视频",
       "requiredVersion": "0.0.1",
-      "version": "1.0.7",
+      "version": "1.0.6",
       "author": "nibiru",
-      "url": "https://raw.githubusercontent.com/quantumultxx/FW-Widgets/refs/heads/main/Widgets/jable.js"
+      "url": "https://raw.githubusercontent.com/pack1r/ForwardWidgets/refs/heads/main/widgets/jable.js"
     },
     {
       "id": "ti.bemarkt.javday",
@@ -38,6 +38,15 @@
       "version": "0.5.0",
       "author": "Baran",
       "url": "https://github.com/baranwang/forward-widget/releases/latest/download/91porn.js"
+    },
+    {
+      "id": "unknow.baranwang.xvideos",
+      "title": "XVideos",
+      "description": "Xvideos",
+      "requiredVersion": "0.0.1",
+      "version": "0.9.4",
+      "author": "匿名",
+      "url": "https://github.com/baranwang/forward-widget/releases/latest/download/xvideos.js"
     }
 
   ]
