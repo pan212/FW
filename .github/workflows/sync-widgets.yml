@@ -1,0 +1,80 @@
+name: Sync Widget JS Files
+
+on:
+  schedule:
+    - cron: '0 * * * *'   # 每小时运行一次
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Prepare workspace
+        run: mkdir -p "FW/WidgetsAutoBackup/18+"
+
+      - name: Download and check for changes
+        run: |
+          set -e
+          TARGET_DIR="FW/WidgetsAutoBackup/18+"
+
+          echo "Downloading raw files..."
+          RAW_FILES=(
+            "https://raw.githubusercontent.com/Madai-v/ForwardWidgets/refs/heads/main/Widgets/ph.js"
+            "https://raw.githubusercontent.com/pack1r/ForwardWidgets/refs/heads/main/widgets/jable.js"
+            "https://raw.githubusercontent.com/pack1r/ForwardWidgets/refs/heads/main/widgets/javday.js"
+            "https://raw.githubusercontent.com/tom-proxy/FW/refs/heads/jk/zb.js"
+          )
+
+          RELEASES_FILES=(
+            "https://github.com/baranwang/forward-widget/releases/latest/download/91porn.js"
+            "https://github.com/baranwang/forward-widget/releases/latest/download/xvideos.js"
+          )
+
+          CHANGED=false
+
+          download_and_compare() {
+            url="$1"
+            filename=$(basename "$url")
+            temp_file="${TARGET_DIR}/${filename}.new"
+            target_file="${TARGET_DIR}/${filename}"
+
+            curl -sSL "$url" -o "$temp_file"
+
+            if [ -f "$target_file" ]; then
+              if cmp -s "$temp_file" "$target_file"; then
+                echo "No change: $filename"
+                rm "$temp_file"
+              else
+                echo "Updated: $filename"
+                mv "$temp_file" "$target_file"
+                CHANGED=true
+              fi
+            else
+              echo "New file: $filename"
+              mv "$temp_file" "$target_file"
+              CHANGED=true
+            fi
+          }
+
+          for url in "${RAW_FILES[@]}"; do
+            download_and_compare "$url"
+          done
+
+          for url in "${RELEASES_FILES[@]}"; do
+            download_and_compare "$url"
+          done
+
+          echo "changed=$CHANGED" >> $GITHUB_ENV
+
+      - name: Commit and Push if changed
+        if: env.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add "FW/WidgetsAutoBackup/18+/"
+          git commit -m "🔄 Auto-sync widget JS files to 18+ backup folder"
+          git push
