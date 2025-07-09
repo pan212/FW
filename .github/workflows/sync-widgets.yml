@@ -1,8 +1,8 @@
-name: Sync Widget JS Files with Backup under 18+/history
+name: Sync Widget JS Files with Backup (16 & 18+)
 
 on:
   schedule:
-    - cron: '0 * * * *'   # 每小时执行一次
+    - cron: '0 * * * *'   # 每小时运行一次
   workflow_dispatch:
 
 jobs:
@@ -16,44 +16,33 @@ jobs:
       - name: Prepare Directories
         run: |
           mkdir -p "FW/WidgetsAutoBackup/18+/history"
+          mkdir -p "FW/WidgetsAutoBackup/16/history"
 
       - name: Download and Compare Files
         run: |
           set -e
-          TARGET_DIR="FW/WidgetsAutoBackup/18+"
-          HISTORY_DIR="$TARGET_DIR/history"
           TIMESTAMP=$(date +%Y%m%d-%H%M%S)
-
-          RAW_FILES=(
-            "https://raw.githubusercontent.com/Madai-v/ForwardWidgets/refs/heads/main/Widgets/ph.js"
-            "https://raw.githubusercontent.com/pack1r/ForwardWidgets/refs/heads/main/widgets/jable.js"
-            "https://raw.githubusercontent.com/pack1r/ForwardWidgets/refs/heads/main/widgets/javday.js"
-            "https://raw.githubusercontent.com/tom-proxy/FW/refs/heads/jk/zb.js"
-          )
-
-          RELEASES_FILES=(
-            "https://github.com/baranwang/forward-widget/releases/latest/download/91porn.js"
-            "https://github.com/baranwang/forward-widget/releases/latest/download/xvideos.js"
-          )
-
           CHANGED=false
 
           download_and_compare() {
             url="$1"
+            dir="$2"
             filename=$(basename "$url")
-            temp_file="${TARGET_DIR}/${filename}.new"
-            target_file="${TARGET_DIR}/${filename}"
-            backup_file="${HISTORY_DIR}/${filename}.${TIMESTAMP}.bak"
+            target_dir="FW/WidgetsAutoBackup/$dir"
+            history_dir="$target_dir/history"
+            temp_file="$target_dir/${filename}.new"
+            target_file="$target_dir/${filename}"
+            backup_file="$history_dir/${filename}.${TIMESTAMP}.bak"
 
-            echo "Checking: $filename"
+            echo "Checking [$dir]: $filename"
             curl -sSL "$url" -o "$temp_file"
 
             if [ -f "$target_file" ]; then
               if cmp -s "$temp_file" "$target_file"; then
-                echo "No changes for $filename"
+                echo "No change: $filename"
                 rm "$temp_file"
               else
-                echo "Changes detected for $filename"
+                echo "Updated: $filename"
                 cp "$target_file" "$backup_file"
                 mv "$temp_file" "$target_file"
                 CHANGED=true
@@ -65,12 +54,51 @@ jobs:
             fi
           }
 
-          for url in "${RAW_FILES[@]}"; do
-            download_and_compare "$url"
+          # === 18+ ===
+          RAW_18=(
+            "https://raw.githubusercontent.com/Madai-v/ForwardWidgets/refs/heads/main/Widgets/ph.js"
+            "https://raw.githubusercontent.com/pack1r/ForwardWidgets/refs/heads/main/widgets/jable.js"
+            "https://raw.githubusercontent.com/pack1r/ForwardWidgets/refs/heads/main/widgets/javday.js"
+            "https://raw.githubusercontent.com/tom-proxy/FW/refs/heads/jk/zb.js"
+          )
+
+          RELEASES_18=(
+            "https://github.com/baranwang/forward-widget/releases/latest/download/91porn.js"
+            "https://github.com/baranwang/forward-widget/releases/latest/download/xvideos.js"
+          )
+
+          for url in "${RAW_18[@]}"; do
+            download_and_compare "$url" "18+"
           done
 
-          for url in "${RELEASES_FILES[@]}"; do
-            download_and_compare "$url"
+          for url in "${RELEASES_18[@]}"; do
+            download_and_compare "$url" "18+"
+          done
+
+          # === 16 ===
+          RAW_16=(
+            "https://raw.githubusercontent.com/pack1r/ForwardWidgets/main/widgets/combined.js"
+            "https://raw.githubusercontent.com/huangxd-/ForwardWidgets/main/widgets/zhuijurili.js"
+            "https://raw.githubusercontent.com/huangxd-/ForwardWidgets/main/widgets/trakt.js"
+            "https://raw.githubusercontent.com/huangxd-/ForwardWidgets/main/widgets/douban.js"
+            "https://raw.githubusercontent.com/huangxd-/ForwardWidgets/main/widgets/yatu.js"
+            "https://raw.githubusercontent.com/2kuai/ForwardWidgets/main/Widgets/HotPicks.js"
+            "https://raw.githubusercontent.com/opix-maker/Forward/main/js/Bangumi_v2.0.0.js"
+            "https://raw.githubusercontent.com/opix-maker/Forward/main/js/IMDb.js"
+            "https://raw.githubusercontent.com/pack1r/ForwardWidgets/main/widgets/douban.js"
+            "https://raw.githubusercontent.com/pack1r/ForwardWidgets/main/widgets/imdb.js"
+          )
+
+          RELEASES_16=(
+            "https://github.com/EmrysChoo/ForwardWidgets/raw/main/Widgets/person_movie.js"
+          )
+
+          for url in "${RAW_16[@]}"; do
+            download_and_compare "$url" "16"
+          done
+
+          for url in "${RELEASES_16[@]}"; do
+            download_and_compare "$url" "16"
           done
 
           echo "changed=$CHANGED" >> $GITHUB_ENV
@@ -80,6 +108,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add FW/WidgetsAutoBackup/16/
           git add FW/WidgetsAutoBackup/18+/
           git commit -m "🔄 Auto-sync + backup widgets at $(date +'%Y-%m-%d %H:%M:%S')"
           git push
