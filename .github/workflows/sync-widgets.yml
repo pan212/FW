@@ -108,9 +108,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          # 先拉取远程最新代码，避免push冲突
+          git pull --rebase || true
+
           git add WidgetsAutoBackup/16/
           git add WidgetsAutoBackup/18+/
-          git commit -m "🔄 Auto-sync + backup widgets at $(date +'%Y-%m-%d %H:%M:%S')" || exit 0
-          
-          git pull --rebase
+          git commit -m "🔄 Auto-sync + backup widgets at $(date +'%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
           git push
