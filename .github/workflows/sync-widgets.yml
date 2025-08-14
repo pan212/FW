@@ -87,6 +87,8 @@ jobs:
             "https://raw.githubusercontent.com/opix-maker/Forward/main/js/IMDb.js"
             "https://raw.githubusercontent.com/pack1r/ForwardWidgets/main/widgets/douban.js"
             "https://raw.githubusercontent.com/pack1r/ForwardWidgets/main/widgets/imdb.js"
+            "https://raw.githubusercontent.com/huangxd-/ForwardWidgets/refs/heads/main/widgets/danmu_auto.js"
+            "https://raw.githubusercontent.com/huangxd-/ForwardWidgets/refs/heads/main/widgets/danmu_playurl.js"
           )
 
           RELEASES_16=(
