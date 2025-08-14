@@ -1,7 +1,7 @@
 {
   "title": "𝓟𝓪𝓷'𝓼 𝓦𝓲𝓭𝓰𝓮𝓽𝓼⚡️",
   "description": "自用模块聚合",
-  "icon": "https://github.com/pan212/FW/blob/main/icon/one.png",
+  "icon": "https://raw.githubusercontent.com/pan212/FW/refs/heads/main/icon/one.png",
   "widgets": [
    {
       "id": "forward.combined.media.lists",
