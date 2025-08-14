@@ -1,7 +1,7 @@
 # FW-Widgets
 <p align="center">
   <br>
-  <img width="150" src="https://raw.githubusercontent.com/quantumultxx/FW-Widgets/refs/heads/main/icon/icon.PNG">
+  <img width="150" src="https://github.com/pan212/FW/blob/5b2b21d983a1c0f288166e4539bc4a6c12a3fe5a/icon/icon.PNG">
   <br>
   <br>
 </p>
