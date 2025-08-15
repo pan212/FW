@@ -15,7 +15,7 @@
 WidgetMetadata = {
   id: "forward.auto.danmu",
   title: "自动链接弹幕",
-  version: "1.0.8",
+  version: "1.0.7",
   requiredVersion: "0.0.2",
   description: "自动获取播放链接并从服务器获取弹幕【五折码：CHEAP.5;七折码：CHEAP】",
   author: "huangxd",
@@ -535,7 +535,7 @@ async function getCommentsById(params) {
   if (tmdbInfo.type !== "Reality") {
       console.log("anime: ", animes[0]);
 
-      if (type === "tv") {
+      if (episode) {
         if (episode - 1 >= 0 && episode - 1 < animes[0].seriesPlaylinks.length) {
             playUrl = animes[0].seriesPlaylinks[episode - 1].url;
         } else {
@@ -776,7 +776,7 @@ async function getPlayurlFromVod(title, tmdbInfo, type, season, episode, episode
       console.log(`Selected platform: ${platform}`);
       platformIndex = vodPlayFromList.indexOf(platform);
   }
-  if (type === "movie") {
+  if (!episode) {
       playUrl = vodPlayUrlList[platformIndex].split("#")[0].split("$")[1];
   } else {
       const episodeList = vodPlayUrlList[platformIndex].split("#");
