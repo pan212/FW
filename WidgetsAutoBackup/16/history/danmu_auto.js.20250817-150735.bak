@@ -31,6 +31,10 @@ WidgetMetadata = {
           value: "https://fc.lyz05.cn",
         },
         {
+          title: "56uxi",
+          value: "https://danmu.56uxi.com",
+        },
+        {
           title: "hls",
           value: "https://dmku.hls.one",
         },
@@ -41,10 +45,6 @@ WidgetMetadata = {
         {
           title: "678",
           value: "https://se.678.ooo",
-        },
-        {
-          title: "56uxi",
-          value: "https://danmu.56uxi.com",
         },
       ],
     },
@@ -454,10 +454,10 @@ function printParams(seriesName, episodeName, airDate, runtime, premiereDate, se
 async function getDanmuFromUrl(danmu_server, playUrl, debug) {
     const danmu_server_list = [
         "https://fc.lyz05.cn",
+        "https://danmu.56uxi.com",
         "https://dmku.hls.one",
         "https://api.danmu.icu",
         "https://se.678.ooo",
-        "https://danmu.56uxi.com",
     ];
 
     // 统一的请求函数

@@ -15,7 +15,7 @@
 WidgetMetadata = {
   id: "forward.playurl.danmu",
   title: "手动链接弹幕",
-  version: "1.0.4",
+  version: "1.0.3",
   requiredVersion: "0.0.2",
   description: "从指定播放链接和服务器获取弹幕【五折码：CHEAP.5;七折码：CHEAP】",
   author: "huangxd",
@@ -31,6 +31,10 @@ WidgetMetadata = {
           value: "https://fc.lyz05.cn",
         },
         {
+          title: "56uxi",
+          value: "https://danmu.56uxi.com",
+        },
+        {
           title: "hls",
           value: "https://dmku.hls.one",
         },
@@ -41,10 +45,6 @@ WidgetMetadata = {
         {
           title: "678",
           value: "https://se.678.ooo",
-        },
-        {
-          title: "56uxi",
-          value: "https://danmu.56uxi.com",
         },
       ],
     },
@@ -151,111 +151,22 @@ function generateDanmaku(message, count) {
   };
 }
 
-async function convertMobileToPcUrl(url) {
-    /**
-     * 将移动端页面 URL 转换为 PC 端页面 URL。
-     * 支持爱奇艺、腾讯视频、优酷、芒果TV和哔哩哔哩。
-     * @param {string} url - 移动端 URL
-     * @returns {string} - PC 端 URL（匹配成功）、错误信息（匹配但解析失败）或原链接（不匹配）
-     */
-
-    // 爱奇艺 (iQIYI)
-    if (url.includes('m.iqiyi.com')) {
-        // 移动端示例: https://m.iqiyi.com/v_1ftv9n1m3bg.html
-        // PC 端示例: https://www.iqiyi.com/v_1ftv9n1m3bg.html
-        return url.replace('m.iqiyi.com', 'www.iqiyi.com');
-    }
-
-    // 腾讯视频 (Tencent Video)
-    if (url.includes('m.v.qq.com')) {
-        // 移动端示例: https://m.v.qq.com/x/m/play?cid=53q0eh78q97e4d1&vid=x00174aq5no&ptag=hippySearch&pageType=long
-        // PC 端示例: https://v.qq.com/x/cover/53q0eh78q97e4d1/x00174aq5no.html
-        const cidMatch = url.match(/cid=([a-zA-Z0-9]+)/);
-        const vidMatch = url.match(/vid=([a-zA-Z0-9]+)/);
-        if (cidMatch && vidMatch) {
-            const cid = cidMatch[1];
-            const vid = vidMatch[1];
-            return `https://v.qq.com/x/cover/${cid}/${vid}.html`;
-        } else if (vidMatch) {
-            const vid = vidMatch[1];
-            return `https://v.qq.com/x/page/${vid}.html`;
-        }
-        return "无法解析腾讯视频移动端 URL";
-    }
-
-    // 优酷 (Youku)
-    if (url.includes('m.youku.com')) {
-        // 移动端示例: https://m.youku.com/alipay_video/id_cbff0b0703e54d659628.html?spm=a2hww.12518357.drawer4.2
-        // PC 端示例: https://v.youku.com/v_show/id_cbff0b0703e54d659628.html
-
-        // 获取重定向location
-        const response = await Widget.http.get(url, {
-            headers: {
-                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-            },
-        });
-
-        const regex = /https:\/\/v\.youku\.com\/v_show\/id_[A-Za-z0-9=]+\.html/g;
-        const matches = response.data.match(regex); // 找到所有匹配的链接
-        if (matches) {
-            return matches[0];
-        }
-
-        return "无法解析优酷移动端 URL";
-    }
-
-    // 芒果TV (Mango TV)
-    if (url.includes('m.mgtv.com')) {
-        // 移动端示例: https://m.mgtv.com/b/771610/23300622.html?fpa=0&fpos=0
-        // PC 端示例: https://www.mgtv.com/b/771610/23300622.html
-        return url.replace('m.mgtv.com', 'www.mgtv.com').replace(/\?.*$/, '');
-    }
-
-    // 哔哩哔哩 (Bilibili)
-    if (url.includes('m.bilibili.com')) {
-        // 移动端示例: https://m.bilibili.com/bangumi/play/ep1231564
-        // PC 端示例: https://www.bilibili.com/bangumi/play/ep1231564
-        return url.replace('m.bilibili.com', 'www.bilibili.com');
-    }
-
-    // 不匹配任何支持的平台，直接返回原链接
-    return url;
-}
-
 async function getCommentsById(params) {
   const { danmu_server, commentId, link, videoUrl, season, episode, tmdbId, type, title } = params;
 
-  console.log("原始播放链接：", title);
-
-  try {
-      new URL(title); // 如果不是有效的 URL，会抛出错误
-  } catch (error) {
-      return generateDanmaku(`【手动链接弹幕】：请输入有效的播放链接进行弹幕搜索`, 1);
-  }
-
-  const url = await convertMobileToPcUrl(title);
-
-  try {
-      new URL(url); // 如果不是有效的 URL，会抛出错误
-  } catch (error) {
-      return generateDanmaku(`【手动链接弹幕】：${url}`, 1);
-  }
-
-  console.log("转换后播放链接：", url);
-
   const danmu_server_list = [
         "https://fc.lyz05.cn",
+        "https://danmu.56uxi.com",
         "https://dmku.hls.one",
         "https://api.danmu.icu",
         "https://se.678.ooo",
-        "https://danmu.56uxi.com",
     ];
 
     // 统一的请求函数
     async function fetchDanmu(server) {
         try {
             const response = await Widget.http.get(
-                `${server}/?url=${url}&ac=dm`,
+                `${server}/?url=${title}&ac=dm`,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -288,7 +199,7 @@ async function getCommentsById(params) {
     }
 
     // 如果遍历完所有服务器都没有获得有效弹幕，返回默认错误信息
-    return generateDanmaku(`【手动链接弹幕】：弹幕服务器异常，轮询后还是未获得到有效弹幕`, 1);
+    return generateDanmaku(`【自动链接弹幕】：弹幕服务器异常，轮询后还是未获得到有效弹幕`, 1);
 }
 
 function parseDanmuku(responseData) {
