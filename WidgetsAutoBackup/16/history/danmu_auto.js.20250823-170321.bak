@@ -13,11 +13,11 @@
  *
  */
 WidgetMetadata = {
-  id: "forward.playurl.danmu",
-  title: "手动链接弹幕",
-  version: "1.0.6",
+  id: "forward.auto.danmu",
+  title: "自动链接弹幕",
+  version: "1.0.13",
   requiredVersion: "0.0.2",
-  description: "从指定播放链接和服务器获取弹幕【五折码：CHEAP.5;七折码：CHEAP】",
+  description: "自动获取播放链接并从服务器获取弹幕【五折码：CHEAP.5;七折码：CHEAP】",
   author: "huangxd",
   site: "https://github.com/huangxd-/ForwardWidgets",
   globalParams: [
@@ -50,9 +50,163 @@ WidgetMetadata = {
           title: "56uxi",
           value: "https://danmu.56uxi.com",
         },
+      ],
+    },
+    {
+      name: "danmu_server_polling",
+      title: "弹幕服务器轮询开关 (建议打开)",
+      type: "enumeration",
+      value: "true",
+      enumOptions: [
         {
-          title: "lxlad",
-          value: "https://dm.lxlad.com",
+            title: "开",
+            value: "true",
+        },
+        {
+            title: "关",
+            value: "false",
+        },
+      ],
+    },
+    {
+      name: "platform",
+      title: "电影弹幕优先平台",
+      type: "enumeration",
+      value: "random",
+      enumOptions: [
+        {
+            title: "随机",
+            value: "random",
+        },
+        {
+            title: "爱奇艺",
+            value: "qiyi",
+        },
+        {
+            title: "腾讯",
+            value: "qq",
+        },
+        {
+            title: "优酷",
+            value: "youku",
+        },
+        {
+            title: "芒果",
+            value: "imgo",
+        },
+        {
+            title: "哔哩哔哩",
+            value: "bilibili1",
+        },
+      ],
+    },
+    {
+      name: "vod_site",
+      title: "兜底vod站点",
+      type: "input",
+      placeholders: [
+        {
+          title: "789",
+          value: "https://www.caiji.cyou",
+        },
+        {
+          title: "tfdh",
+          value: "https://gctf.tfdh.top",
+        },
+        {
+          title: "69mu",
+          value: "https://www.69mu.cn",
+        },
+        {
+          title: "xmm",
+          value: "https://zy.xmm.hk",
+        },
+      ],
+    },
+    {
+      name: "vod_site_polling",
+      title: "兜底vod站点轮询开关 (建议打开)",
+      type: "enumeration",
+      value: "true",
+      enumOptions: [
+        {
+            title: "开",
+            value: "true",
+        },
+        {
+            title: "关",
+            value: "false",
+        },
+      ],
+    },
+    {
+      name: "debug",
+      title: "调试日志，是否开启前2分钟投放弹幕日志",
+      type: "enumeration",
+      value: "false",
+      enumOptions: [
+        {
+            title: "关",
+            value: "false",
+        },
+        {
+            title: "开",
+            value: "true",
+        },
+      ],
+    },
+    {
+      name: "danmu_api_1",
+      title: "danmu_api_1 (前面匹配不到的可以试试弹幕API，比如一些韩剧/美剧)",
+      type: "input",
+      placeholders: [
+        {
+          title: "示例",
+          value: "https://{domain}/api/{token}",
+        },
+      ],
+    },
+    {
+      name: "danmu_api_2",
+      title: "danmu_api_2 (前面匹配不到的可以试试弹幕API，比如一些韩剧/美剧)",
+      type: "input",
+      placeholders: [
+        {
+          title: "示例",
+          value: "https://{domain}/api/{token}",
+        },
+      ],
+    },
+    {
+      name: "danmu_api_3",
+      title: "danmu_api_3 (前面匹配不到的可以试试弹幕API，比如一些韩剧/美剧)",
+      type: "input",
+      placeholders: [
+        {
+          title: "示例",
+          value: "https://{domain}/api/{token}",
+        },
+      ],
+    },
+    {
+      name: "danmu_api_4",
+      title: "danmu_api_4 (前面匹配不到的可以试试弹幕API，比如一些韩剧/美剧)",
+      type: "input",
+      placeholders: [
+        {
+          title: "示例",
+          value: "https://{domain}/api/{token}",
+        },
+      ],
+    },
+    {
+      name: "danmu_api_5",
+      title: "danmu_api_5 (前面匹配不到的可以试试弹幕API，比如一些韩剧/美剧)",
+      type: "input",
+      placeholders: [
+        {
+          title: "示例",
+          value: "https://{domain}/api/{token}",
         },
       ],
     },
@@ -92,142 +246,6 @@ function printFirst200Chars(data) {
   }
 
   console.log(dataToPrint.slice(0, 200));  // 打印前200个字符
-}
-
-async function searchDanmu(params) {
-  const { tmdbId, type, title, season, link, videoUrl, danmu_server } = params;
-
-  return {
-    animes: [
-    {
-      "animeId": 1223,
-      "bangumiId": "string",
-      "animeTitle": title,
-      "type": "tvseries",
-      "typeDescription": "string",
-      "imageUrl": "string",
-      "startDate": "2025-08-08T13:25:11.189Z",
-      "episodeCount": 12,
-      "rating": 0,
-      "isFavorited": true
-    }],
-  };
-}
-
-async function getDetailById(params) {
-  const { danmu_server, animeId } = params;
-
-  return [
-      {
-        "seasonId": "string",
-        "episodeId": 1,
-        "episodeTitle": "episode",
-        "episodeNumber": "string",
-        "lastWatched": "2025-08-08T13:26:42.844Z",
-        "airDate": "2025-08-08T13:26:42.844Z"
-      }
-    ];
-}
-
-function generateDanmaku(message, count) {
-  const comments = [];
-  const baseP = "1,1,25,16777215,1754803089,0,0,26732601000067074,1"; // 原始 p 字符串
-
-  for (let i = 0; i < count; i++) {
-    // 增加 cid
-    const cid = i;
-
-    // 修改 p 的第一位数字，加 5
-    const pParts = baseP.split(',');
-    pParts[0] = (parseInt(pParts[0], 10) + i * 5).toString(); // 每次增加 i * 5
-    const updatedP = pParts.join(',');
-
-    // 使用传入的 m 参数
-    const m = message;
-
-    // 生成每个弹幕对象
-    comments.push({
-      cid: cid,
-      p: updatedP,
-      m: m
-    });
-  }
-
-  return {
-    count: comments.length,
-    comments: comments
-  };
-}
-
-async function convertMobileToPcUrl(url) {
-    /**
-     * 将移动端页面 URL 转换为 PC 端页面 URL。
-     * 支持爱奇艺、腾讯视频、优酷、芒果TV和哔哩哔哩。
-     * @param {string} url - 移动端 URL
-     * @returns {string} - PC 端 URL（匹配成功）、错误信息（匹配但解析失败）或原链接（不匹配）
-     */
-
-    // 爱奇艺 (iQIYI)
-    if (url.includes('m.iqiyi.com')) {
-        // 移动端示例: https://m.iqiyi.com/v_1ftv9n1m3bg.html
-        // PC 端示例: https://www.iqiyi.com/v_1ftv9n1m3bg.html
-        return url.replace('m.iqiyi.com', 'www.iqiyi.com');
-    }
-
-    // 腾讯视频 (Tencent Video)
-    if (url.includes('m.v.qq.com')) {
-        // 移动端示例: https://m.v.qq.com/x/m/play?cid=53q0eh78q97e4d1&vid=x00174aq5no&ptag=hippySearch&pageType=long
-        // PC 端示例: https://v.qq.com/x/cover/53q0eh78q97e4d1/x00174aq5no.html
-        const cidMatch = url.match(/cid=([a-zA-Z0-9]+)/);
-        const vidMatch = url.match(/vid=([a-zA-Z0-9]+)/);
-        if (cidMatch && vidMatch) {
-            const cid = cidMatch[1];
-            const vid = vidMatch[1];
-            return `https://v.qq.com/x/cover/${cid}/${vid}.html`;
-        } else if (vidMatch) {
-            const vid = vidMatch[1];
-            return `https://v.qq.com/x/page/${vid}.html`;
-        }
-        return "无法解析腾讯视频移动端 URL";
-    }
-
-    // 优酷 (Youku)
-    if (url.includes('m.youku.com')) {
-        // 移动端示例: https://m.youku.com/alipay_video/id_cbff0b0703e54d659628.html?spm=a2hww.12518357.drawer4.2
-        // PC 端示例: https://v.youku.com/v_show/id_cbff0b0703e54d659628.html
-
-        // 获取重定向location
-        const response = await Widget.http.get(url, {
-            headers: {
-                "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
-            },
-        });
-
-        const regex = /https:\/\/v\.youku\.com\/v_show\/id_[A-Za-z0-9=]+\.html/g;
-        const matches = response.data.match(regex); // 找到所有匹配的链接
-        if (matches) {
-            return matches[0];
-        }
-
-        return "无法解析优酷移动端 URL";
-    }
-
-    // 芒果TV (Mango TV)
-    if (url.includes('m.mgtv.com')) {
-        // 移动端示例: https://m.mgtv.com/b/771610/23300622.html?fpa=0&fpos=0
-        // PC 端示例: https://www.mgtv.com/b/771610/23300622.html
-        return url.replace('m.mgtv.com', 'www.mgtv.com').replace(/\?.*$/, '');
-    }
-
-    // 哔哩哔哩 (Bilibili)
-    if (url.includes('m.bilibili.com')) {
-        // 移动端示例: https://m.bilibili.com/bangumi/play/ep1231564
-        // PC 端示例: https://www.bilibili.com/bangumi/play/ep1231564
-        return url.replace('m.bilibili.com', 'www.bilibili.com');
-    }
-
-    // 不匹配任何支持的平台，直接返回原链接
-    return url;
 }
 
 // md5.js 本地版本
@@ -1229,45 +1247,329 @@ async function fetchYouku(inputUrl) {
   return convertToDanmakuXML(contents);
 }
 
-async function getCommentsById(params) {
-  const { danmu_server, commentId, link, videoUrl, season, episode, tmdbId, type, title } = params;
+async function fetchTmdbData(id, type) {
+    const tmdbResult = await Widget.tmdb.get(`/${type}/${id}`, {
+        headers: {
+            "User-Agent":
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        },
+    });
+    //打印结果
+    // console.log("搜索内容：" + key)
+    if (!tmdbResult) {
+        console.log("搜索内容失败：", `/${type}/${id}`);
+        return null;
+    }
+    console.log("tmdbResults:" + JSON.stringify(tmdbResult, null, 2));
+    // console.log("tmdbResults.total_results:" + tmdbResults.total_results);
+    // console.log("tmdbResults.results[0]:" + tmdbResults.results[0]);
+    return tmdbResult;
+}
 
-  console.log("原始播放链接：", title);
+async function getPlayurls(title, tmdbInfo, type, season) {
+  let queryTitle = title;
 
-  const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(:\d+)?(\/[^\s]*)?$/;
-  if (!urlRegex.test(title)) {
-      return generateDanmaku(`【手动链接弹幕】：请输入有效的播放链接进行弹幕搜索`, 1);
+  const response = await Widget.http.get(
+    `https://api.so.360kan.com/index?force_v=1&kw=${queryTitle}&from=&pageno=1&v_ap=1&tab=all`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+      },
+    }
+  );
+
+  if (!response) {
+    throw new Error("获取数据失败");
   }
 
-  const url = await convertMobileToPcUrl(title);
+  const data = response.data;
+  console.log("360kan response:", data);
 
-  if (!urlRegex.test(title)) {
-      return generateDanmaku(`【手动链接弹幕】：请输入有效的播放链接进行弹幕搜索`, 1);
+  // 检查API返回状态
+  if (data.msg !== "ok") {
+    throw new Error(data.errorMessage || "API调用失败");
   }
 
-  console.log("转换后播放链接：", url);
+  // 开始过滤数据
+  let animes = [];
+  const longData = data.data.longData;
+  if (longData.rows && longData.rows.length > 0) {
+    animes = longData.rows.filter((anime) => {
+      if ((anime.cat_name === "电视剧" || anime.cat_name === "动漫") && type === "tv" && tmdbInfo.type !== "Reality") {
+        return true;
+      } else if (anime.cat_name === "综艺" && type === "tv" && tmdbInfo.type === "Reality") {
+        return true;
+      } else if (anime.cat_name === "电影" && type === "movie") {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    if (season && tmdbInfo.type !== "Reality") {
+      // filter season
+      const matchedAnimes = animes.filter((anime) => {
+        if (!anime.seriesPlaylinks || anime.seriesPlaylinks.length === 0) {
+          return false;
+        }
+        let anime_title = anime.title.replace(/<\/b>·<b>/g, '');
 
-  const danmu_server_list = [
+        if (anime_title.includes(queryTitle) && anime.titleTxt.charAt(0) === queryTitle.charAt(0)) {
+          // use space to split animeTitle
+          let titleParts = anime_title.split("</b>");
+          console.log(titleParts);
+          if (titleParts.length > 1) {
+            let seasonPart = titleParts[1];
+            // match number from seasonPart
+            let seasonIndex = seasonPart.match(/\d+/);
+            if (seasonIndex && String(seasonIndex[0]) === String(season)) {
+              return true;
+            }
+            // match chinese number
+            let chineseNumber = seasonPart.match(/[一二三四五六七八九十壹贰叁肆伍陆柒捌玖拾]+/);
+            if (chineseNumber && String(convertChineseNumber(chineseNumber[0])) === String(season)) {
+              return true;
+            }
+            // match season 1 and no seasonPart
+            if (String(season) === "1" && seasonPart === "") {
+              return true;
+            }
+          }
+          return false;
+        } else {
+          return false;
+        }
+      });
+      animes = matchedAnimes;
+    }
+    if (season && tmdbInfo.type === "Reality") {
+      const matchedAnimes = animes.filter((anime) => {
+        if (anime.cat_name !== "综艺") {
+          return false;
+        }
+        return true;
+      });
+      animes = matchedAnimes;
+    }
+  }
+
+  console.log("animes.length:", animes.length);
+
+  if (animes.length >= 1 && tmdbInfo.type !== "Reality") {
+    const tmdbYear = type === "tv" ? tmdbInfo.first_air_date.split("-")[0] : tmdbInfo.release_date.split("-")[0];
+
+    animes = animes.filter(anime => anime.year == tmdbYear);
+  }
+
+  return animes;
+}
+
+async function searchDanmu(params) {
+  const { tmdbId, type, title, season, link, videoUrl, danmu_server } = params;
+
+  // const animes = await getPlayurls(title, tmdbId, type, season);
+
+  return {
+    animes: [
+      {
+        "animeId": 1223,
+        "bangumiId": "string",
+        "animeTitle": title,
+        "type": "tvseries",
+        "typeDescription": "string",
+        "imageUrl": "string",
+        "startDate": "2025-08-08T13:25:11.189Z",
+        "episodeCount": 12,
+        "rating": 0,
+        "isFavorited": true
+      }
+    ]
+  };
+}
+
+function convertChineseNumber(chineseNumber) {
+  // 如果是阿拉伯数字，直接转换
+  if (/^\d+$/.test(chineseNumber)) {
+    return Number(chineseNumber);
+  }
+
+  // 中文数字映射（简体+繁体）
+  const digits = {
+    // 简体
+    '零': 0, '一': 1, '二': 2, '三': 3, '四': 4, '五': 5,
+    '六': 6, '七': 7, '八': 8, '九': 9,
+    // 繁体
+    '壹': 1, '貳': 2, '參': 3, '肆': 4, '伍': 5,
+    '陸': 6, '柒': 7, '捌': 8, '玖': 9
+  };
+
+  // 单位映射（简体+繁体）
+  const units = {
+    // 简体
+    '十': 10, '百': 100, '千': 1000,
+    // 繁体
+    '拾': 10, '佰': 100, '仟': 1000
+  };
+
+  let result = 0;
+  let current = 0;
+  let lastUnit = 1;
+
+  for (let i = 0; i < chineseNumber.length; i++) {
+    const char = chineseNumber[i];
+
+    if (digits[char] !== undefined) {
+      // 数字
+      current = digits[char];
+    } else if (units[char] !== undefined) {
+      // 单位
+      const unit = units[char];
+
+      if (current === 0) current = 1;
+
+      if (unit >= lastUnit) {
+        // 更大的单位，重置结果
+        result = current * unit;
+      } else {
+        // 更小的单位，累加到结果
+        result += current * unit;
+      }
+
+      lastUnit = unit;
+      current = 0;
+    }
+  }
+
+  // 处理最后的个位数
+  if (current > 0) {
+    result += current;
+  }
+
+  return result;
+}
+
+function convertYoukuUrl(url) {
+  // 使用正则表达式提取 vid 参数
+  const vidMatch = url.match(/vid=([^&]+)/);
+  if (!vidMatch || !vidMatch[1]) {
+    return null; // 如果没有找到 vid 参数，返回 null
+  }
+
+  const vid = vidMatch[1];
+  // 构造新的 URL
+  return `https://v.youku.com/v_show/id_${vid}.html`;
+}
+
+function generateDanmaku(message, count) {
+  const comments = [];
+  const baseP = "1,1,25,16777215,1754803089,0,0,26732601000067074,1"; // 原始 p 字符串
+
+  for (let i = 0; i < count; i++) {
+    // 增加 cid
+    const cid = i;
+
+    // 修改 p 的第一位数字，加 5
+    const pParts = baseP.split(',');
+    pParts[0] = (parseInt(pParts[0], 10) + i * 5).toString(); // 每次增加 i * 5
+    const updatedP = pParts.join(',');
+
+    // 使用传入的 m 参数
+    const m = message;
+
+    // 生成每个弹幕对象
+    comments.push({
+      cid: cid,
+      p: updatedP,
+      m: m
+    });
+  }
+
+  return {
+    count: comments.length,
+    comments: comments
+  };
+}
+
+
+function printParams(seriesName, episodeName, airDate, runtime, premiereDate, season, episode, tmdbId) {
+    /*
+    seriesName: 歌手
+    episodeName: 第13期：荣耀汇聚终极一战
+    airDate: 2025-08-08
+    runtime: 12360
+    premiereDate: 08/08 08:00
+    season: 10
+    episode: 13
+    tmdbId: 107467
+    */
+    const comments = [];
+    comments.push({
+        cid: 0,
+        p: "1,1,25,16777215,1754803089,0,0,26732601000067074,1",
+        m: `seriesName: ${seriesName}`
+    });
+    comments.push({
+        cid: 0,
+        p: "6,1,25,16777215,1754803089,0,0,26732601000067074,1",
+        m: `episodeName: ${episodeName}`
+    });
+    comments.push({
+        cid: 0,
+        p: "11,1,25,16777215,1754803089,0,0,26732601000067074,1",
+        m: `airDate: ${airDate}`
+    });
+    comments.push({
+        cid: 0,
+        p: "16,1,25,16777215,1754803089,0,0,26732601000067074,1",
+        m: `runtime: ${runtime}`
+    });
+    comments.push({
+        cid: 0,
+        p: "21,1,25,16777215,1754803089,0,0,26732601000067074,1",
+        m: `premiereDate: ${premiereDate}`
+    });
+    comments.push({
+        cid: 0,
+        p: "26,1,25,16777215,1754803089,0,0,26732601000067074,1",
+        m: `season: ${season}`
+    });
+    comments.push({
+        cid: 0,
+        p: "31,1,25,16777215,1754803089,0,0,26732601000067074,1",
+        m: `episode: ${episode}`
+    });
+    comments.push({
+        cid: 0,
+        p: "36,1,25,16777215,1754803089,0,0,26732601000067074,1",
+        m: `tmdbId: ${tmdbId}`
+    });
+    return {
+        count: 8,
+        comments: comments
+    };
+}
+
+async function getDanmuFromUrl(danmu_server, playUrl, debug, danmu_server_polling) {
+    const danmu_server_list = [
         "http://127.0.0.1",
         "https://fc.lyz05.cn",
         "https://dmku.hls.one",
         "https://api.danmu.icu",
         "https://se.678.ooo",
         "https://danmu.56uxi.com",
-        "https://dm.lxlad.com",
     ];
 
     // 统一的请求函数
     async function fetchDanmu(server) {
         if (server === "http://127.0.0.1") {
-            const res = await fetchLocalhost(url);
+            const res = await fetchLocalhost(playUrl);
 
             const danmuCount = parseDanmuku(res);
             return danmuCount >= 5 ? res : null; // 如果弹幕数大于等于 5，返回弹幕数据
         }
         try {
             const response = await Widget.http.get(
-                `${server}/?url=${url}&ac=dm`,
+                `${server}/?url=${playUrl}&ac=dm`,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -1293,15 +1595,397 @@ async function getCommentsById(params) {
     if (result) return result;
 
     // 如果传入的 danmu_server 不满足条件，查询 danmu_server_list 中的其他服务器
-    for (let server of danmu_server_list) {
-        if (server === danmu_server) continue;  // 如果是传入的 danmu_server，跳过
+    if (danmu_server_polling === "true") {
+        for (let server of danmu_server_list) {
+            if (server === danmu_server) continue;  // 如果是传入的 danmu_server，跳过
 
-        result = await fetchDanmu(server);
-        if (result) return result;  // 如果获取到有效弹幕，返回弹幕数据
+            result = await fetchDanmu(server);
+            if (result) return result;  // 如果获取到有效弹幕，返回弹幕数据
+        }
     }
 
     // 如果遍历完所有服务器都没有获得有效弹幕，返回默认错误信息
-    return generateDanmaku(`【手动链接弹幕】：弹幕服务器异常，轮询后还是未获得到有效弹幕`, 1);
+    const count = debug === "true" ? 24 : 1;
+    return generateDanmaku(`【自动链接弹幕】：弹幕服务器异常，轮询后还是未获得到有效弹幕`, count);
+}
+
+async function getCommentsById(params) {
+  const { danmu_server, danmu_server_polling, platform, vod_site, vod_site_polling, debug, commentId, seriesName,
+      episodeName, airDate, runtime, premiereDate, link, videoUrl, season, episode, tmdbId, type, title,
+    danmu_api_1, danmu_api_2, danmu_api_3, danmu_api_4, danmu_api_5 } = params;
+
+  // 测试参数值
+  // return printParams(seriesName, episodeName, airDate, runtime, premiereDate, season, episode, tmdbId);
+
+  if (typeof tmdbId === 'undefined') {
+    const count = debug === "true" ? 24 : 1;
+    return generateDanmaku("【自动链接弹幕】：参数tmdbId为undefined", count);
+  }
+
+  let playUrl = null;
+  let playUrlList = [];
+
+  const tmdbInfo = await fetchTmdbData(tmdbId, type);
+
+  const animes = await getPlayurls(title, tmdbInfo, type, season);
+  console.log("animes.length:", animes.length);
+
+  if (animes.length === 0) {
+    playUrl = await getPlayurlFromVod(title, tmdbInfo, type, season, episode, episodeName, airDate, platform, vod_site, vod_site_polling);
+    if (playUrl) {
+        return await getDanmuFromUrl(danmu_server, playUrl, debug, danmu_server_polling);
+    }
+    if (!playUrl) {
+        const result = await getDanmuFromAPI(title, tmdbInfo, type, season, episode, episodeName, airDate,
+            danmu_api_1, danmu_api_2, danmu_api_3, danmu_api_4, danmu_api_5);
+        if (result) {
+          return result;
+        }
+    }
+    if (!playUrl) {
+        const count = debug === "true" ? 24 : 1;
+        return generateDanmaku("【自动链接弹幕】：相关站点没有找到这部影视剧", count);
+    }
+  }
+
+  if (tmdbInfo.type !== "Reality") {
+      console.log("anime: ", animes[0]);
+
+      if (type === "tv") {
+        if (episode - 1 >= 0 && episode - 1 < animes[0].seriesPlaylinks.length) {
+            playUrl = animes[0].seriesPlaylinks[episode - 1].url;
+        } else {
+            playUrl = await getPlayurlFromVod(title, tmdbInfo, type, season, episode, episodeName, airDate, platform, vod_site, vod_site_polling);
+            if (playUrl) {
+                return await getDanmuFromUrl(danmu_server, playUrl, debug, danmu_server_polling);
+            }
+            if (!playUrl) {
+                const count = debug === "true" ? 24 : 1;
+                return generateDanmaku("【自动链接弹幕】：没有找到该集弹幕", count);
+            }
+        }
+      } else {
+        // 获取所有平台名称
+        if (platform === "random" || !animes[0].playlinks[platform]) {
+          const allowedPlatforms = ["qiyi", "bilibili1", "imgo", "youku", "qq"];
+          // 随机选择一个平台
+          const filteredLinks = Object.keys(animes[0].playlinks).filter(platform => allowedPlatforms.includes(platform));
+          const randomPlatform = filteredLinks[Math.floor(Math.random() * filteredLinks.length)];
+          console.log(`Random platform: ${randomPlatform}`);
+          // 获取对应平台的链接
+          playUrl = animes[0].playlinks[randomPlatform];
+        } else {
+          console.log(`Selected platform: ${platform}`);
+          playUrl = animes[0].playlinks[platform];
+        }
+      }
+  } else {
+      if (!episodeName) {
+          playUrl = await getPlayurlFromVod(title, tmdbInfo, type, season, episode, episodeName, airDate, platform, vod_site, vod_site_polling);
+          if (playUrl) {
+              return await getDanmuFromUrl(danmu_server, playUrl, debug, danmu_server_polling);
+          }
+          if (!playUrl) {
+              const count = debug === "true" ? 24 : 1;
+              return generateDanmaku("【自动链接弹幕】：该集综艺没有集标题，匹配不了", count);
+          }
+      }
+      // 如果存在airDate，则先获取airDate的年份，并通过年份获取所有年份相关的集信息
+      let airYear = null;
+      if (airDate && airDate !== "" && /^\d{4}-\d{2}-\d{2}$/.test(airDate)) {
+          airYear = airDate.split("-")[0];
+      }
+      console.log("airYear: ", airYear);
+      for (let i = 0; i < animes.length; i++) {
+          for (const key of Object.keys(animes[i].playlinks_year)) {
+            for (const year of animes[i].playlinks_year[key]) {
+                if (!airYear || year === Number(airYear)) {
+                    console.log(`键: ${key}, 年份: ${year}`);
+                    for (let j = 0; j <= 10; j++) {
+                        const response = await Widget.http.get(
+                            `https://api.so.360kan.com/episodeszongyi?entid=${animes[i].id}&site=${key}&y=${year}&count=20&offset=${j*20}`,
+                            {
+                                headers: {
+                                    "Content-Type": "application/json",
+                                    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+                                },
+                            }
+                        );
+
+                        const data = response.data;
+                        console.log("360kan zongyi response:", data);
+
+                        // 检查API返回状态
+                        if (data.msg !== "ok") {
+                            throw new Error(data.errorMessage || "API调用失败");
+                        }
+
+                        const episodeList = data.data.list;
+                        if (!episodeList) {
+                            break;
+                        }
+                        for (const episodeInfo of episodeList) {
+                            if (airDate && episodeInfo.pubdate === airDate) {
+                                playUrlList.push(episodeInfo);
+                            }
+                            if (episodeInfo.name === episodeName) {
+                                playUrl = episodeInfo.url;
+                                break
+                            }
+                        }
+                        if (playUrl) {
+                            break
+                        }
+                    }
+                }
+                if (playUrl) {
+                    break
+                }
+            }
+            if (playUrl) {
+                break
+            }
+        }
+        if (playUrl) {
+            break
+        }
+      }
+  }
+
+  if (!playUrl && playUrlList.length !== 0) {
+      playUrl = playUrlList[0].url;
+  }
+
+  console.log("playUrl: ", playUrl);
+
+  if (!playUrl) {
+      playUrl = await getPlayurlFromVod(title, tmdbInfo, type, season, episode, episodeName, airDate, platform, vod_site, vod_site_polling);
+      if (playUrl) {
+          return await getDanmuFromUrl(danmu_server, playUrl, debug, danmu_server_polling);
+      }
+      if (!playUrl) {
+          const count = debug === "true" ? 24 : 1;
+          return generateDanmaku("【自动链接弹幕】：没有获取到相应播放链接！", count);
+      }
+  }
+
+  // 处理302场景
+  // https://v.youku.com/video?vid=XNjQ4MTIwOTE2NA==&tpa=dW5pb25faWQ9MTAyMjEzXzEwMDAwNl8wMV8wMQ需要转成https://v.youku.com/v_show/id_XNjQ4MTIwOTE2NA==.html
+  if (playUrl.includes("youku.com/video?vid")) {
+      playUrl = convertYoukuUrl(playUrl);
+  }
+
+  return await getDanmuFromUrl(danmu_server, playUrl, debug, danmu_server_polling);
+}
+
+function extractAndFormatDate(episodeKey) {
+    // 检查 YYYYMMDD 格式（如 20220612）
+    const yyyymmddRegex = /^\d{8}/;
+    // 检查 YYYY-MM-DD 格式（如 2014-01-03）
+    const yyyy_mm_ddRegex = /^\d{4}-\d{2}-\d{2}/;
+
+    let dateStr = null;
+
+    // 优先检查 YYYYMMDD 格式
+    if (yyyymmddRegex.test(episodeKey)) {
+        dateStr = episodeKey.slice(0, 8);
+        // 转换为 YYYY-MM-DD
+        return `${dateStr.slice(0, 4)}-${dateStr.slice(4, 6)}-${dateStr.slice(6, 8)}`;
+    }
+    // 检查 YYYY-MM-DD 格式
+    else if (yyyy_mm_ddRegex.test(episodeKey)) {
+        dateStr = episodeKey.slice(0, 10);
+        // 已经是正确格式，直接返回
+        return dateStr;
+    }
+
+    // 如果没有找到有效日期格式，返回 null
+    return null;
+}
+
+async function getPlayurlFromVod(title, tmdbInfo, type, season, episode, episodeName, airDate, platform, vod_site, vod_site_polling) {
+  let response;
+  const vod_sites = ["https://www.caiji.cyou", "https://gctf.tfdh.top", "https://www.69mu.cn", "https://zy.xmm.hk"];
+
+  // 定义一个异步函数来处理单个请求
+  async function tryRequest(site, title) {
+      try {
+        const response = await Widget.http.get(
+          `${site}/api.php/provide/vod/?ac=detail&wd=${title}&pg=1`,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+            },
+          }
+        );
+        // 检查 response.data.list 是否存在且长度大于 0
+        if (response && response.data && response.data.list && response.data.list.length > 0) {
+          console.log(`请求 ${site} 成功`);
+          return response;
+        } else {
+          console.log(`请求 ${site} 成功，但 response.data.list 为空`);
+          return null;
+        }
+      } catch (error) {
+        console.error(`请求 ${site} 失败:`, error.message);
+        return null;
+      }
+  }
+
+  // 主逻辑
+  async function fetchVodData(vod_site, title) {
+      // 首先尝试用户指定的 vod_site
+      response = await tryRequest(vod_site, title);
+      if (response) {
+        return response;
+      }
+
+      if (vod_site_polling === "false") {
+          return null;
+      }
+
+      // 过滤掉用户指定的 vod_site
+      const filteredSites = vod_sites.filter(site => site !== vod_site);
+
+      // 如果没有其他服务器，返回 null
+      if (filteredSites.length === 0) {
+        console.error("没有其他服务器可尝试");
+        return null;
+      }
+
+      // 轮询剩余的服务器
+      for (const site of filteredSites) {
+        response = await tryRequest(site, title);
+        if (response) {
+          return response; // 找到有效响应，立即返回
+        }
+      }
+
+      // 所有服务器都尝试失败或返回空列表
+      console.error("所有服务器请求失败或返回空列表");
+      return null;
+  }
+
+  response = await fetchVodData(vod_site, title);
+
+  if (!response) {
+      return null;
+  }
+
+  const data = response.data;
+  console.log("vod response: ↓↓↓");
+  printFirst200Chars(data);
+
+  // 开始过滤数据
+  let animes = [];
+  if (data.list && data.list.length > 0) {
+    animes = data.list.filter((anime) => {
+      if ((anime.type_name === "电视剧" || anime.type_name === "动漫" || anime.type_name === "连续剧" || anime.type_name === "少儿"
+          || anime.type_name.includes("剧") || anime.type_name.includes("国创")
+      ) && type === "tv" && tmdbInfo.type !== "Reality") {
+        return true;
+      } else if (anime.type_name === "综艺" && type === "tv" && tmdbInfo.type === "Reality") {
+        return true;
+      } else if ((anime.type_name === "电影" || anime.type_name.includes("电影") || anime.type_name.includes("片")) && type === "movie") {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
+
+  console.log("animes.length:", animes.length);
+
+  let tmdbYear;
+  if (animes.length >= 1) {
+      if (type === "tv") {
+          const targetSeason = tmdbInfo.seasons.find(s => s.season_number === Number(season));
+          if (!targetSeason) {
+              return null;
+          }
+          tmdbYear = targetSeason.air_date.split("-")[0]
+      } else {
+          tmdbYear = tmdbInfo.release_date.split("-")[0]
+      }
+      console.log("tmdbYear: ", tmdbYear);
+
+      animes = animes.filter(anime => anime.vod_year == tmdbYear);
+  }
+
+  if (animes.length === 0) {
+      return null;
+  }
+
+  const anime = animes[0];
+  if (!anime.vod_play_url || anime.vod_play_url === "") {
+      return null;
+  }
+
+  let playUrl = null;
+
+  let vodPlayFromList = anime.vod_play_from.split("$$$")
+  vodPlayFromList = vodPlayFromList.map(item => {
+      if (item === "mgtv") {
+        return "imgo"; // 将mgtv替换为imgo
+      } else if (item === "bilibili") {
+        return "bilibili1"; // 将bilibili替换为bilibili1
+      } else {
+        return item; // 其他情况保持原值
+      }
+  });
+
+  const vodPlayUrlList = anime.vod_play_url.split("$$$")
+  let platformIndex = -1;
+  if (platform === "random" || !vodPlayFromList.includes(platform)) {
+      // 允许的平台列表
+      const allowedPlatforms = ["qiyi", "bilibili1", "imgo", "youku", "qq"];
+
+      // Step 1: 过滤出在allowedPlatforms中的元素，并保持它们在vodPlayFromList中的原始索引
+      const validIndices = vodPlayFromList
+          .map((item, index) => allowedPlatforms.includes(item) ? index : -1)
+          .filter(index => index !== -1);
+
+      // Step 2: 从有效的索引中随机选择一个
+      if (validIndices.length > 0) {
+          platformIndex = validIndices[Math.floor(Math.random() * validIndices.length)];
+          const randomPlatform = vodPlayFromList[platformIndex];
+          console.log(`Randomly selected platform: ${randomPlatform} (Index: ${platformIndex})`);
+      } else {
+          return null;
+      }
+  } else {
+      console.log(`Selected platform: ${platform}`);
+      platformIndex = vodPlayFromList.indexOf(platform);
+  }
+  if (type === "movie") {
+      playUrl = vodPlayUrlList[platformIndex].split("#")[0].split("$")[1];
+  } else {
+      const episodeList = vodPlayUrlList[platformIndex].split("#");
+      if (tmdbInfo.type !== "Reality") {
+          if (episode - 1 >= 0 && episode - 1 < episodeList.length) {
+              playUrl = episodeList[episode - 1].split("$")[1];
+          } else {
+              return null;
+          }
+      } else {
+          for (const episodeInfo of episodeList) {
+              const episodeKey = episodeInfo.split("$")[0];
+              const episodeDate = extractAndFormatDate(episodeKey);
+              console.log(episodeKey, episodeDate);
+              if (episodeDate && airDate && episodeDate === airDate) {
+                  playUrl = episodeInfo.split("$")[1];
+                  break;
+              }
+              if (episodeKey === episodeName || episodeName.includes(episodeKey)) {
+                  playUrl = episodeInfo.split("$")[1];
+                  break;
+              }
+          }
+      }
+  }
+
+  return playUrl;
 }
 
 function parseDanmuku(responseData) {
@@ -1350,4 +2034,155 @@ function parseDanmuku(responseData) {
     console.error('解析弹幕失败:', error);
     return 0;
   }
+}
+
+async function getDanmuFromAPI(title, tmdbInfo, type, season, episode, episodeName, airDate,
+                               danmu_api_1, danmu_api_2, danmu_api_3, danmu_api_4, danmu_api_5) {
+  const danmu_apis = [danmu_api_1, danmu_api_2, danmu_api_3, danmu_api_4, danmu_api_5];
+  let queryTitle = title;
+
+  for (let danmu_api of danmu_apis) {
+    if (!danmu_api) {
+      continue
+    }
+    // 搜索title
+    let response;
+    try {
+      response = await Widget.http.get(
+        `${danmu_api}/api/v2/search/anime?keyword=${queryTitle}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+          },
+        }
+      );
+    } catch (error) {
+      console.error('API调用失败:', error);
+      continue;
+    }
+
+    if (!response) {
+      console.error("获取数据失败");
+      continue;
+    }
+
+    const data = response.data;
+
+    // 检查API返回状态
+    if (!data.success) {
+      console.error(data.errorMessage || "API调用失败");
+      continue;
+    }
+
+    // 开始过滤数据
+    let animes = [];
+    if (data.animes && data.animes.length > 0) {
+      animes = data.animes.filter((anime) => {
+        if (
+          (anime.type === "tvseries" || anime.type === "web") &&
+          type === "tv"
+        ) {
+          return true;
+        } else if (anime.type === "movie" && type === "movie") {
+          return true;
+        } else {
+          return false;
+        }
+      });
+      if (season) {
+        // filter season
+        const matchedAnimes = animes.filter((anime) => {
+          if (anime.animeTitle.includes(queryTitle)) {
+            // use space to split animeTitle
+            let titleParts = anime.animeTitle.split(" ");
+            if (titleParts.length > 1) {
+              let seasonPart = titleParts[1];
+              // match number from seasonPart
+              let seasonIndex = seasonPart.match(/\d+/);
+              if (seasonIndex && seasonIndex[0] === season) {
+                return true;
+              }
+              // match chinese number
+              let chineseNumber = seasonPart.match(/[一二三四五六七八九十壹贰叁肆伍陆柒捌玖拾]+/);
+              if (chineseNumber && convertChineseNumber(chineseNumber[0]) === season) {
+                return true;
+              }
+            }
+            return false;
+          } else {
+            return false;
+          }
+        });
+        if (matchedAnimes.length > 0) {
+          animes = matchedAnimes;
+        }
+        console.log(animes);
+      }
+    }
+
+    if (animes.length === 0) {
+      continue;
+    }
+
+    const animeId = animes[0].bangumiId;
+
+    // 查询集数
+    const response_detail = await Widget.http.get(
+      `${danmu_api}/api/v2/bangumi/${animeId}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        },
+      }
+    );
+
+    if (!response_detail) {
+      console.error("获取数据失败");
+      continue;
+    }
+
+    let commentId;
+
+    if (type === "movie") {
+        commentId = response_detail.data.bangumi.episodes[0].episodeId;
+    } else {
+        const episodeList = response_detail.data.bangumi.episodes;
+        if (tmdbInfo.type !== "Reality") {
+            if (episode - 1 >= 0 && episode - 1 < episodeList.length) {
+                commentId = episodeList[episode - 1].episodeId;
+            }
+        } else {
+            for (const episodeInfo of episodeList) {
+                console.log("episodeTitle: ", episodeInfo.episodeTitle);
+                if (episodeInfo.episodeTitle === episodeName || episodeName.includes(episodeInfo.episodeTitle)) {
+                    commentId = episodeInfo.episodeId;
+                    break;
+                }
+            }
+        }
+    }
+
+    // 获取弹幕
+    if (commentId) {
+      // 调用弹弹play弹幕API - 使用Widget.http.get
+      const response_danmu = await Widget.http.get(
+        `${danmu_api}/api/v2/comment/${commentId}?withRelated=true&chConvert=1`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+          },
+        }
+      );
+
+      if (!response_danmu) {
+        console.error("获取数据失败");
+        continue;
+      }
+      return response_danmu.data;
+    }
+  }
+  return null;
 }

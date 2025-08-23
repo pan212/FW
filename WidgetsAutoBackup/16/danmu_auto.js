@@ -50,6 +50,10 @@ WidgetMetadata = {
           title: "56uxi",
           value: "https://danmu.56uxi.com",
         },
+        {
+          title: "lxlad",
+          value: "https://dm.lxlad.com",
+        },
       ],
     },
     {
@@ -159,56 +163,26 @@ WidgetMetadata = {
       name: "danmu_api_1",
       title: "danmu_api_1 (前面匹配不到的可以试试弹幕API，比如一些韩剧/美剧)",
       type: "input",
-      placeholders: [
-        {
-          title: "示例",
-          value: "https://{domain}/api/{token}",
-        },
-      ],
     },
     {
       name: "danmu_api_2",
       title: "danmu_api_2 (前面匹配不到的可以试试弹幕API，比如一些韩剧/美剧)",
       type: "input",
-      placeholders: [
-        {
-          title: "示例",
-          value: "https://{domain}/api/{token}",
-        },
-      ],
     },
     {
       name: "danmu_api_3",
       title: "danmu_api_3 (前面匹配不到的可以试试弹幕API，比如一些韩剧/美剧)",
       type: "input",
-      placeholders: [
-        {
-          title: "示例",
-          value: "https://{domain}/api/{token}",
-        },
-      ],
     },
     {
       name: "danmu_api_4",
       title: "danmu_api_4 (前面匹配不到的可以试试弹幕API，比如一些韩剧/美剧)",
       type: "input",
-      placeholders: [
-        {
-          title: "示例",
-          value: "https://{domain}/api/{token}",
-        },
-      ],
     },
     {
       name: "danmu_api_5",
       title: "danmu_api_5 (前面匹配不到的可以试试弹幕API，比如一些韩剧/美剧)",
       type: "input",
-      placeholders: [
-        {
-          title: "示例",
-          value: "https://{domain}/api/{token}",
-        },
-      ],
     },
   ],
   modules: [
@@ -1557,6 +1531,7 @@ async function getDanmuFromUrl(danmu_server, playUrl, debug, danmu_server_pollin
         "https://api.danmu.icu",
         "https://se.678.ooo",
         "https://danmu.56uxi.com",
+        "https://dm.lxlad.com",
     ];
 
     // 统一的请求函数
