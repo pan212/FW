@@ -15,7 +15,7 @@
 WidgetMetadata = {
   id: "forward.playurl.danmu",
   title: "手动链接弹幕",
-  version: "1.0.6",
+  version: "1.0.7",
   requiredVersion: "0.0.2",
   description: "从指定播放链接和服务器获取弹幕【五折码：CHEAP.5;七折码：CHEAP】",
   author: "huangxd",
@@ -1273,6 +1273,7 @@ async function getCommentsById(params) {
                         "Content-Type": "application/json",
                         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
                     },
+                    timeout: 15,
                 }
             );
 
