@@ -15,7 +15,7 @@
 WidgetMetadata = {
   id: "forward.playurl.danmu",
   title: "手动链接弹幕",
-  version: "1.0.7",
+  version: "1.0.8",
   requiredVersion: "0.0.2",
   description: "从指定播放链接和服务器获取弹幕【五折码：CHEAP.5;七折码：CHEAP】",
   author: "huangxd",
@@ -405,6 +405,24 @@ function md5(message) {
   }
 
   return (wordToHex(a) + wordToHex(b) + wordToHex(c) + wordToHex(d)).toLowerCase();
+}
+
+function escapeXmlText(str) {
+  return str.replace(/[<>&"']/g, function (c) {
+    switch (c) {
+      case '<': return '&lt;';
+      case '>': return '&gt;';
+      case '&': return '&amp;';
+      case '"': return '&quot;';
+      case "'": return '&apos;';
+    }
+  });
+}
+
+function fixDTagContent(xmlStr) {
+  return xmlStr.replace(/(<d [^>]*>)([\s\S]*?)(<\/d>)/g, function (match, startTag, textContent, endTag) {
+    return startTag + escapeXmlText(textContent) + endTag;
+  });
 }
 
 function buildQueryString(params) {
@@ -1260,7 +1278,9 @@ async function getCommentsById(params) {
     // 统一的请求函数
     async function fetchDanmu(server) {
         if (server === "http://127.0.0.1") {
-            const res = await fetchLocalhost(url);
+            let res = await fetchLocalhost(url);
+            // 弹幕中有特殊字符会导致弹幕消失
+            res = fixDTagContent(res);
 
             const danmuCount = parseDanmuku(res);
             return danmuCount >= 5 ? res : null; // 如果弹幕数大于等于 5，返回弹幕数据
