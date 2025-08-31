@@ -2422,9 +2422,6 @@ async function getDanmuFromUrl(danmu_server, playUrl, debug, danmu_server_pollin
 }
 
 async function getDanmuFromRenRen(title, tmdbInfo, type, season, episode, episodeName) {
-  // 还有点问题，先跳过
-  return null;
-
   const scraper = new RenrenScraper();
   const results = await scraper.search(title);
   console.log("人人视频搜索结果：", results);
