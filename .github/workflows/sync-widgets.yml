@@ -61,12 +61,14 @@ jobs:
             "https://raw.githubusercontent.com/pack1r/ForwardWidgets/refs/heads/main/widgets/javday.js"
             "https://raw.githubusercontent.com/tom-proxy/FW/refs/heads/jk/zb.js"
             "https://widgets-xd.vercel.app/Widgets/MissAV.js"
+            "https://unpkg.com/@forward-widget/nsfw/91porn"
+            "https://unpkg.com/@forward-widget/nsfw/xvideos"
           )
 
-          RELEASES_18=(
-            "https://github.com/baranwang/forward-widget/releases/latest/download/91porn.js"
-            "https://github.com/baranwang/forward-widget/releases/latest/download/xvideos.js"
-          )
+          #RELEASES_18=(
+           # "https://github.com/baranwang/forward-widget/releases/latest/download/91porn.js"
+           # "https://github.com/baranwang/forward-widget/releases/latest/download/xvideos.js"
+          # )
 
           for url in "${RAW_18[@]}"; do
             download_and_compare "$url" "18+"
