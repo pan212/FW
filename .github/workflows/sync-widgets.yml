@@ -60,9 +60,9 @@ jobs:
             "https://raw.githubusercontent.com/pack1r/ForwardWidgets/refs/heads/main/widgets/jable.js"
             "https://raw.githubusercontent.com/pack1r/ForwardWidgets/refs/heads/main/widgets/javday.js"
             "https://raw.githubusercontent.com/tom-proxy/FW/refs/heads/jk/zb.js"
-            "https://widgets-xd.vercel.app/Widgets/MissAV.js"
-            "https://unpkg.com/@forward-widget/nsfw/91porn"
-            "https://unpkg.com/@forward-widget/nsfw/xvideos"
+            #"https://widgets-xd.vercel.app/Widgets/MissAV.js"
+            #"https://unpkg.com/@forward-widget/nsfw/91porn"
+            #"https://unpkg.com/@forward-widget/nsfw/xvideos"
           )
 
           #RELEASES_18=(
