@@ -89,6 +89,7 @@ jobs:
             "https://raw.githubusercontent.com/pack1r/ForwardWidgets/main/widgets/imdb.js"
             "https://raw.githubusercontent.com/huangxd-/ForwardWidgets/refs/heads/main/widgets/danmu_auto.js"
             "https://raw.githubusercontent.com/huangxd-/ForwardWidgets/refs/heads/main/widgets/danmu_playurl.js"
+            "https://unpkg.com/@forward-widget/danmu-universe@0.7.0/dist/danmu-universe.js"
           )
 
           RELEASES_16=(
