@@ -40,6 +40,15 @@
       "url": "https://raw.githubusercontent.com/pan212/FW/refs/heads/main/WidgetsAutoBackup/18%2B/91porn.js"
     },
     {
+      "id": "missav",
+      "title": "missav",
+      "description": "missav",
+      "requiredVersion": "0.0.1",
+      "version": "1.0.0",
+      "author": "蝴蝶",
+      "url": "https://widgets-xd.vercel.app/Widgets/MissAV.js"
+    }
+    {
       "id": "Bitch",
       "title": "碧池直播",
       "description": "碧池直播",
@@ -57,6 +66,5 @@
       "author": "匿名",
       "url": "https://raw.githubusercontent.com/pan212/FW/refs/heads/main/WidgetsAutoBackup/18%2B/xvideos.js"
     }
-
   ]
 }
