@@ -159,47 +159,51 @@ var WidgetMetadata = {
 
 async function getVideos(params = {}) {
   try {
+    // 1. 参数验证
     if (!params.category) {
       throw new Error("缺少必要参数: category");
     }
 
+    // 2. 构建请求URL
     const url = `http://api.maiyoux.com:81/mf/${params.category}.txt`;
-    console.log("[视频获取] 请求URL:", url);
+    console.log('[视频获取] 请求URL:', url);
 
+    // 3. 发送请求
     const response = await Widget.http.get(url, {
       headers: {
-        "User-Agent": "Mozilla/5.0 (Linux; Android 4.4.2)",
-        "Accept": "*/*"
+        'User-Agent': 'Mozilla/5.0 (Linux; Android 4.4.2; OPPO R11 Build/NMF26X) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/30.0.0.0 Mobile Safari/537.36',
+        "Content-Type": "application/octet-stream"
       }
     });
 
-    if (!response || !response.data) {
-      throw new Error("API无返回内容");
+    // 4. 响应数据验证
+    if (!response?.data) {
+      throw new Error("API返回空数据");
     }
 
-    let data;
-    if (typeof response.data === "string") {
-      data = JSON.parse(response.data);
-    } else {
-      data = response.data;
+    // 5. 数据结构验证
+    if (typeof response.data !== 'object' || !Array.isArray(response.data.zhubo)) {
+      throw new Error("无效的数据格式");
     }
 
-    if (!data.zhubo || !Array.isArray(data.zhubo)) {
-      throw new Error("API数据结构异常");
-    }
-
-    return data.zhubo
-      .filter(v => v.address && v.title)
-      .map(v => ({
-        id: v.address,
+    // 6. 数据转换与过滤
+    const videos = response.data.zhubo
+      .filter(item => item.address && item.title) // 过滤无效条目
+      .map(item => ({
+        id: item.address,
         type: "url",
-        title: v.title.trim(),
-        posterPath: v.img || "",
-        videoUrl: v.address
+        title: item.title.trim(),
+        posterPath: item.img || '', 
+        videoUrl: item.address
       }));
 
-  } catch (err) {
-    console.error("模块执行失败:", err);
-    throw new Error(`视频获取失败: ${err.message}`);
+    if (videos.length === 0) {
+      console.warn('警告: 过滤后视频列表为空，原始数据:', response.data);
+    }
+
+    return videos;
+
+  } catch (error) {
+    throw new Error(`视频获取失败: ${error.message}`);
   }
 }
