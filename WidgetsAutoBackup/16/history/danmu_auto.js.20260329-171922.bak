@@ -9027,7 +9027,7 @@ var HanjutvSource = class extends BaseSource {
     return new SegmentListResponse({
       type: "hanjutv",
       duration: 0,
-      segmentList: [{ type: "hanjutv", segment_start: 0, segment_end: 3e4, url: id }]
+      segmentList: []
     });
   }
   async getEpisodeSegmentDanmu(segment) {
